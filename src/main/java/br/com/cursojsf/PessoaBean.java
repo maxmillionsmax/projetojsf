@@ -19,6 +19,7 @@ public class PessoaBean implements Serializable{
 	
 	public String salvar() {
 		daoGeneric.salvar(pessoa);
+		pessoa = new Pessoa();
 		
 		return "";
 	}
