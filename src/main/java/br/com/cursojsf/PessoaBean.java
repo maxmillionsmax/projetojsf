@@ -18,11 +18,15 @@ public class PessoaBean implements Serializable{
 	private DaoGeneric<Pessoa> daoGeneric = new DaoGeneric<Pessoa>();
 	
 	public String salvar() {
-		daoGeneric.salvar(pessoa);
-		pessoa = new Pessoa();
-		
+		pessoa = daoGeneric.merger(pessoa);
 		return "";
 	}
+	
+	public String novo() {
+		pessoa = new Pessoa();
+		return "";
+	}
+	
 
 	public Pessoa getPessoa() {
 		return pessoa;

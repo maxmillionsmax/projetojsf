@@ -9,20 +9,25 @@
 
 	<h:form id="formPessoa" >
 		<h1>Ola Jsf</h1>
-		<h:outputLabel value="Nome"/>
+		
+		<h:outputLabel value="Id:"/>
+		<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true"/>
+		<br/>
+		
+		<h:outputLabel value="Nome:"/>
 		<h:inputText value="#{pessoaBean.pessoa.nome}"/>
 		<br/>
 		
-		<h:outputLabel value="Sobrenome"/>
+		<h:outputLabel value="Sobrenome:"/>
 		<h:inputText value="#{pessoaBean.pessoa.sobrenome}"/>
 		<br/>
 		
-		<h:outputLabel value="Idade"/>
+		<h:outputLabel value="Idade:"/>
 		<h:inputText value="#{pessoaBean.pessoa.idade}"/>
 		<br/>
 		
-		
 		<h:commandButton value="Salvar" action="#{pessoaBean.salvar}"/>
+		<h:commandButton value="Limpar" action="#{pessoaBean.novo}"/>
 		
 	</h:form>
 	

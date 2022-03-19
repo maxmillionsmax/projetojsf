@@ -23,4 +23,17 @@ public class DaoGeneric<E> implements Serializable{
 		entityManager.close();
 	}
 	
+    public E merger(E entidade) {
+		
+		EntityManager entityManager = JPAUtil.getEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		entityTransaction.begin();
+		
+		E retorno = entityManager.merge(entidade);
+		
+		entityTransaction.commit();
+		entityManager.close();
+		
+		return retorno;
+	}
 }
