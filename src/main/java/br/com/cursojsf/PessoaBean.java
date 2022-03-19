@@ -1,7 +1,10 @@
 package br.com.cursojsf;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -16,9 +19,11 @@ public class PessoaBean implements Serializable{
 	
 	private Pessoa pessoa = new Pessoa();
 	private DaoGeneric<Pessoa> daoGeneric = new DaoGeneric<Pessoa>();
+	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
 	
 	public String salvar() {
 		pessoa = daoGeneric.merger(pessoa);
+		carregarPessoas();
 		return "";
 	}
 	
@@ -30,7 +35,15 @@ public class PessoaBean implements Serializable{
 	public String remove() {
 		daoGeneric.deletePorId(pessoa);
 		pessoa = new Pessoa();
+		carregarPessoas();
 		return "";
+	}
+	
+	@PostConstruct
+	public void carregarPessoas() {
+		
+		pessoas = daoGeneric.getListEntity(Pessoa.class);
+	
 	}
 
 	public Pessoa getPessoa() {
@@ -41,5 +54,8 @@ public class PessoaBean implements Serializable{
 		this.pessoa = pessoa;
 	}
 	
+	public List<Pessoa> getPessoas() {
+		return pessoas;
+	}
 	
 }
