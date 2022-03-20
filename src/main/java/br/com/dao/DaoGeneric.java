@@ -70,6 +70,7 @@ public class DaoGeneric<E> implements Serializable {
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
 
+		@SuppressWarnings("unchecked")
 		List<E> retorno = entityManager.createQuery("from "+entidade.getName()).getResultList();
 
 		entityTransaction.commit();
