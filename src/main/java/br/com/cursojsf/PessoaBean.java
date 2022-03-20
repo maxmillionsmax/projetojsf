@@ -23,6 +23,7 @@ public class PessoaBean implements Serializable{
 	
 	public String salvar() {
 		pessoa = daoGeneric.merger(pessoa);
+		pessoa = new Pessoa();
 		carregarPessoas();
 		return "";
 	}
