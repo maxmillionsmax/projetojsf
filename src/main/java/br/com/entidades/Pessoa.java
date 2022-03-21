@@ -26,10 +26,26 @@ public class Pessoa implements Serializable{
 	
 	private Integer idade;
 	
+	private String[] frameworks;
+	
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 	
 	private String sexo;
+	
+		
+	public Pessoa() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void setFrameworks(String[] frameworks) {
+		this.frameworks = frameworks;
+	}
+	
+	public String[] getFrameworks() {
+		return frameworks;
+	}
+	
 	
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
@@ -37,10 +53,6 @@ public class Pessoa implements Serializable{
 	
 	public String getSexo() {
 		return sexo;
-	}
-	
-	public Pessoa() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {

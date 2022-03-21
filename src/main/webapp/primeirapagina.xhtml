@@ -29,14 +29,26 @@
 		
 		<h:outputLabel value="sexo" />
 		
-		<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}" requiredMessage="escolha o sexo">
+		<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}" requiredMessage="escolha o sexo" required="false">
 			<f:selectItem itemLabel="Selecione o sexo" itemValue="Não informado" noSelectionOption="true"/>
 			<f:selectItem itemLabel="Masculino" itemValue="MASCULINO"/>
 			<f:selectItem itemLabel="Feminino" itemValue="FEMININO"/>
 		</h:selectOneMenu>	
-			<h:outputLabel/>
+
+		<h:outputLabel value="Framewok" />
+		<h:selectManyMenu id="campoframeworks" value="#{pessoaBean.pessoa.frameworks}"
+		                    style="height:108px"  requiredMessage="escolha os frameworks">
+			<f:selectItem itemLabel="Hibernate" itemValue="hibernate"/>
+			<f:selectItem itemLabel="Spring Mvc" itemValue="spring Mvc"/>
+			<f:selectItem itemLabel="Jpa" itemValue="jpa"/>
+			<f:selectItem itemLabel="PrimeFaces" itemValue="primefaces"/>
+			<f:selectItem itemLabel="Jsp" itemValue="jsp"/>
+			<f:selectItem itemLabel="Grails" itemValue="grails"/>
+		</h:selectManyMenu>	
+
+
+		<h:outputLabel/>
 		<h:panelGroup>
-		
 		<h:commandButton value="Salvar" action="#{pessoaBean.salvar}"/>
 		<h:commandButton value="Limpar" action="#{pessoaBean.novo}"/>
 		<h:commandButton value="remover" action="#{pessoaBean.remove}"/>
