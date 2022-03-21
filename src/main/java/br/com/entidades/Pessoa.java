@@ -33,11 +33,19 @@ public class Pessoa implements Serializable{
 	
 	private String sexo;
 	
+	private Boolean ativo;
 		
 	public Pessoa() {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Boolean getAtivo() {
+		return ativo;
+	}
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+	
 	public void setFrameworks(String[] frameworks) {
 		this.frameworks = frameworks;
 	}

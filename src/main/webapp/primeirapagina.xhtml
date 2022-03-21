@@ -29,8 +29,8 @@
 		
 		<h:outputLabel value="sexo" />
 		
-		<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}" requiredMessage="escolha o sexo" required="false">
-			<f:selectItem itemLabel="Selecione o sexo" itemValue="Não informado" noSelectionOption="true"/>
+		<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}" required="false">
+			<f:selectItem itemLabel="Selecione o sexo" noSelectionOption="true"/>
 			<f:selectItem itemLabel="Masculino" itemValue="MASCULINO"/>
 			<f:selectItem itemLabel="Feminino" itemValue="FEMININO"/>
 		</h:selectOneMenu>	
@@ -46,6 +46,8 @@
 			<f:selectItem itemLabel="Grails" itemValue="grails"/>
 		</h:selectManyMenu>	
 
+        <h:outputLabel value="Ativo:"/>
+        	<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}"/>
 
 		<h:outputLabel/>
 		<h:panelGroup>
