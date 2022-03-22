@@ -34,16 +34,13 @@ public class FilterAutenticacao implements Filter{
 		
 		String url = req.getServletPath();
 		
-		if (!url.equalsIgnoreCase("index.jsf") && usuarioLogado == null || usuarioLogado!=null &&  usuarioLogado.trim().isEmpty()) {
-			
+		if (!url.equalsIgnoreCase("index.jsf") && usuarioLogado == null || usuarioLogado.isEmpty()) {
 			RequestDispatcher  dispatcher = request.getRequestDispatcher("/index.jsf");
 			dispatcher.forward(request, response);
 			return;
 		}else {
 			chain.doFilter(request, response);
-			
 		}
-		
 	}
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
