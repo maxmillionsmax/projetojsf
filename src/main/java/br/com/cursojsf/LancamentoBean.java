@@ -33,18 +33,17 @@ public class LancamentoBean {
 		lancamento.setUsuario(pessoaUser);
 		daoGeneric.salvar(lancamento);
 		
-		carregarlancanmentos();
+		carregarlancamentos();
 
 		return "";
 	}
 
 	@PostConstruct
-	private void carregarlancanmentos() {
+	private void carregarlancamentos() {
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = context.getExternalContext();
 		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
-		
 		lancamentos = daoLancamento.consultar(pessoaUser.getId());
 	}
 
@@ -59,7 +58,7 @@ public class LancamentoBean {
 		
 		daoGeneric.deletePorId(lancamento);
 		lancamento = new Lancamento();
-		carregarlancanmentos();
+		carregarlancamentos();
 		
 		return "";
 	}

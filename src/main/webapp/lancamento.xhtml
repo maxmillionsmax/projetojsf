@@ -14,8 +14,7 @@
 		<h:commandLink value="Trocar usuário" action="index" style="margin-left:1cm;"/>
 	</h:form>
 	
-	<h:form id="formLancamento" style="margin-top:10%;
-	                               margin-left:40%;">
+	<h:form id="formLancamento">
 		<h:form>
 			<h:panelGrid columns="2">
 			<f:facet name="header">
@@ -23,7 +22,7 @@
 			</f:facet>
 			
 			<h:outputLabel value="ID:"/>
-			<h:inputText value="#{lancametoBean.lancamento.id}" readonly="true"/>
+			<h:inputText value="#{lancametoBean.lancamento.id}"/>
 			<h:outputLabel value="Nota:"/>
 			<h:inputText value="#{lancametoBean.lancamento.numeroNotaFiscal}"/>
 			<h:outputLabel value="Origem:"/>
@@ -34,15 +33,42 @@
 		<h:outputLabel/>
 		
 		<h:panelGroup>
-		
 			<h:commandButton value="Novo" action="#{lancametoBean.novo}" image="/resources/img/new add user.png" title="Novo" />
 			<h:commandButton style="margin-left:1cm;" value="Salvar" action="#{lancametoBean.salvar}" image="/resources/img/save.png" title="Salvar" />
 			<h:commandButton style="margin-left:1cm;" value="remover" action="#{lancametoBean.remove}" image="/resources/img/remover.png" title="Remover"/>
 			<h:commandButton style="margin-left:1cm;" value="Limpar" type="reset" image="/resources/img/clear.png" title="limpar"/>
-		
 		</h:panelGroup>
+	    </h:panelGrid>
 			
-			</h:panelGrid>
+		<h:dataTable value="#{lancametoBean.lancamentos}" var="lanc" border="3" cellpadding="6" rendered="true">
+		<f:facet name="header">Lista de Lancamentos</f:facet>
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+				<h:outputLabel value="#{lanc.id}"/>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Nota Fical</f:facet>
+				<h:outputLabel value="#{lanc.numeroNotaFiscal}"/>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Origem</f:facet>
+				<h:outputLabel value="#{lanc.empresaOrigem}"/>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Destino</f:facet>
+				<h:outputLabel value="#{lanc.empresaDestino}"/>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Usuário</f:facet>
+				<h:outputLabel value="#{lanc.usuario.nome}"/>
+			</h:column>
+									
+	
+		</h:dataTable>
+			
+		
 		</h:form>
 		
 	</h:form>
