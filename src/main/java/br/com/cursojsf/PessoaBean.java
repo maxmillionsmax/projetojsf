@@ -17,40 +17,40 @@ import br.com.repository.IDaoPessoaImpl;
 
 @ViewScoped
 @ManagedBean(name = "pessoaBean")
-public class PessoaBean implements Serializable{
-	
+public class PessoaBean implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Pessoa pessoa = new Pessoa();
 	private DaoGeneric<Pessoa> daoGeneric = new DaoGeneric<Pessoa>();
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
-	
+
 	private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
-	
+
 	public String salvar() {
 		pessoa = daoGeneric.merger(pessoa);
 		pessoa = new Pessoa();
 		carregarPessoas();
 		return "";
 	}
-	
+
 	public String novo() {
 		pessoa = new Pessoa();
 		return "";
 	}
-	
+
 	public String remove() {
 		daoGeneric.deletePorId(pessoa);
 		pessoa = new Pessoa();
 		carregarPessoas();
 		return "";
 	}
-	
+
 	@PostConstruct
 	public void carregarPessoas() {
-		
+
 		pessoas = daoGeneric.getListEntity(Pessoa.class);
-	
+
 	}
 
 	public Pessoa getPessoa() {
@@ -60,26 +60,36 @@ public class PessoaBean implements Serializable{
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	
+
 	public List<Pessoa> getPessoas() {
 		return pessoas;
 	}
-	
+
 	public String logar() {
-		
-	   Pessoa pessoaUSer = iDaoPessoa.consultarUsuario(pessoa.getLogin(), pessoa.getSenha());
-	   
-	   if (pessoaUSer != null) {
-		   
-		   FacesContext context = FacesContext.getCurrentInstance();
-		   ExternalContext externalContext = context.getExternalContext();
-		   externalContext.getSessionMap().put("usuarioLogado", pessoaUSer.getLogin());
-		   
-		   return "primeirapagina.jsf";
-  	       }
-		
-	    return "index.jsf";
-		
+
+		Pessoa pessoaUSer = iDaoPessoa.consultarUsuario(pessoa.getLogin(), pessoa.getSenha());
+
+		if (pessoaUSer != null) {
+
+			FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = context.getExternalContext();
+			externalContext.getSessionMap().put("usuarioLogado", pessoaUSer);
+
+			return "primeirapagina.jsf";
+		}
+
+		return "index.jsf";
+
 	}
-	
+
+	public boolean permitAcesso(String acesso) {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = context.getExternalContext();
+		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
+
+		return pessoaUser.getPerfilUser().equals(acesso);
+
+	}
+
 }

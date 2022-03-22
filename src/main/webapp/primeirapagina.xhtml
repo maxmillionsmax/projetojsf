@@ -11,7 +11,7 @@
 	<h:form id="formPessoa" >
 	<h:graphicImage height="30" width="190" library="img" name="logomaximiliano.png" title="Criador por Maximiliano paura Caetano"/>
 
-		<h:panelGrid columns="2">
+		<h:panelGrid columns="2" rendered="true">
 		<f:facet name="header">
 			<h:outputText value="Cadastro de usuario"/>
 		</f:facet>
@@ -68,14 +68,14 @@
 		<h:panelGroup>
 		<h:commandButton value="Novo" action="#{pessoaBean.novo}" image="/resources/img/new add user.png" title="Novo" />
 		<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/save.png" title="Salvar" />
-		<h:commandButton value="remover" action="#{pessoaBean.remove}" image="/resources/img/remover.png" title="Remover" />
+		<h:commandButton value="remover" action="#{pessoaBean.remove}" image="/resources/img/remover.png" title="Remover" rendered="#{pessoaBean.permitAcesso('ADMINISTRADOR')}"/>
 		<h:commandButton value="Limpar" type="reset" image="/resources/img/clear.png" title="limpar"/>
 		
 		</h:panelGroup>
 		
 		</h:panelGrid>
 		
-		<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa" border="3" cellpadding="6">
+		<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa" border="3" cellpadding="6" rendered="true">
 		<f:facet name="header">
 	   	     Lista de usuários cadastrados
 		</f:facet>
@@ -104,7 +104,7 @@
 				</h:commandLink>
 			</h:column>
 			
-			<h:column>
+			<h:column rendered="#{pessoaBean.permitAcesso('ADMINISTRADOR')}">
 				<f:facet name="header">Excluir</f:facet>
 				<h:commandLink action="#{pessoaBean.remove}" title="Excluir">
 				  <f:setPropertyActionListener value="#{pessoa}" target="#{pessoaBean.pessoa}"/>
