@@ -7,9 +7,14 @@
 	<title>Cadastro de usuarios</title>
 </h:head>
 <h:body>
+	<h:graphicImage height="30" width="190" library="img" name="logomaximiliano.png" title="Criador por Maximiliano paura Caetano" />
+	<h:form>
+		<h:commandLink value="Administração" action="lancamento" style="margin-left:1cm;"/>
+		<h:commandLink value="Lançamento" action="primeirapagina" style="margin-left:1cm;"/>
+		<h:commandLink value="Trocar usuário" action="index" style="margin-left:1cm;"/>
+	</h:form>
 	
-	<h:form id="formPessoa" >
-	<h:graphicImage height="30" width="190" library="img" name="logomaximiliano.png" title="Criador por Maximiliano paura Caetano"/>
+	<h:form id="formPessoa" rendered="#{pessoaBean.permitAcesso('ADMINISTRADOR')}">
 
 		<h:panelGrid columns="2" rendered="true">
 		<f:facet name="header">
