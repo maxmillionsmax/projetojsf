@@ -2,17 +2,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui ="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Cadastro de usuarios</title>
 </h:head>
 <h:body>
-	<h:graphicImage height="30" width="190" library="img" name="logomaximiliano.png" title="Criador por Maximiliano paura Caetano" />
-	<h:form>
-		<h:commandLink value="Administração" action="primeirapagina" style="margin-left:1cm;" rendered="#{pessoaBean.permitAcesso('ADMINISTRADOR')}"/>
-		<h:commandLink value="Lançamento" action="lancamento" style="margin-left:1cm;"/>
-		<h:commandLink value="Trocar usuário" action="index" style="margin-left:1cm;"/>
-	</h:form>
+	<ui:include src="/menu.xhtml"></ui:include>
 	
 	<h:form id="formPessoa" rendered="#{pessoaBean.permitAcesso('ADMINISTRADOR')}">
 	
