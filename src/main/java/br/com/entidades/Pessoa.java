@@ -42,11 +42,21 @@ public class Pessoa implements Serializable {
 	private String perfilUser;
 
 	private String nivelProgramador;
+	
+	private Integer[] linguagens;
 
 	public Pessoa() {
 		// TODO Auto-generated constructor stub
 	}
 
+	public void setLinguagens(Integer[] linguagens) {
+		this.linguagens = linguagens;
+	}
+	
+	public Integer[] getLinguagens() {
+		return linguagens;
+	}
+	
 	public void setNivelProgramador(String nivelProgramador) {
 		this.nivelProgramador = nivelProgramador;
 	}

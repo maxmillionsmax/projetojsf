@@ -70,12 +70,21 @@
 		</h:selectOneMenu>	
 		
 		<h:outputLabel value="Senioridade:"/>
-			<h:selectOneRadio value="#{pessoaBean.pessoa.nivelProgramador}" layout="pageDirection">
+			<h:selectOneRadio value="#{pessoaBean.pessoa.nivelProgramador}"  layout="pageDirection">
 			<f:selectItem itemLabel="Junior" itemValue="J" />	
 			<f:selectItem itemLabel="Pleno" itemValue="P" />	
 			<f:selectItem itemLabel="Senior" itemValue="S" />	
 			<f:selectItem itemLabel="Especialista" itemValue="E" />	
 			</h:selectOneRadio>
+			
+		<h:outputLabel value="Linguagens:"/>
+			<h:selectManyCheckbox value="#{pessoaBean.pessoa.linguagens}">
+			<f:selectItem itemValue="1" itemLabel="Java" />	
+			<f:selectItem itemValue="2" itemLabel="Php" />	
+			<f:selectItem itemValue="3" itemLabel="Python" />	
+			<f:selectItem itemValue="4" itemLabel="C#"/>
+			<f:selectItem itemValue="5" itemLabel="Cobol"/>	
+			</h:selectManyCheckbox>	
 		
 
 		<h:outputLabel/>
