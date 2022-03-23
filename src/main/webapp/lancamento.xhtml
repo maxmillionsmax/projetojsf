@@ -15,7 +15,6 @@
 	</h:form>
 	
 	<h:form id="formLancamento">
-		<h:form>
 			<h:panelGrid columns="2">
 			<f:facet name="header">
 				<h:outputText value="Lancamento"/>
@@ -64,12 +63,24 @@
 				<f:facet name="header">Usuário</f:facet>
 				<h:outputLabel value="#{lanc.usuario.nome}"/>
 			</h:column>
-									
+			
+			<h:column>
+				<f:facet name="header">Editar</f:facet>
+				<h:commandLink title="Editar">
+				  <f:setPropertyActionListener value="#{lanc}" target="#{lancametoBean.lancamento}"/>
+				   <h:graphicImage value="/resources/img/edit.png"/>
+				</h:commandLink>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Excluir</f:facet>
+				<h:commandLink action="#{lancametoBean.remove}" title="Excluir">
+				  <f:setPropertyActionListener value="#{lanc}" target="#{lancametoBean.lancamento}"/>
+				  <h:graphicImage value="/resources/img/delete.png"/>
+				</h:commandLink>
+			</h:column>			
 	
 		</h:dataTable>
-			
-		
-		</h:form>
 		
 	</h:form>
 	
