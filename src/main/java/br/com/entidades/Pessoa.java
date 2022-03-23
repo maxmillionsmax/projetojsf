@@ -38,21 +38,31 @@ public class Pessoa implements Serializable {
 	private String login;
 
 	private String senha;
-	
+
 	private String perfilUser;
+
+	private String nivelProgramador;
 
 	public Pessoa() {
 		// TODO Auto-generated constructor stub
 	}
 
+	public void setNivelProgramador(String nivelProgramador) {
+		this.nivelProgramador = nivelProgramador;
+	}
+	
+	public String getNivelProgramador() {
+		return nivelProgramador;
+	}
+	
 	public void setPerfilUser(String perfilUser) {
 		this.perfilUser = perfilUser;
 	}
-	
+
 	public String getPerfilUser() {
 		return perfilUser;
 	}
-	
+
 	public String getLogin() {
 		return login;
 	}
