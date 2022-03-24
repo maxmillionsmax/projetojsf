@@ -17,6 +17,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 
+import com.google.gson.Gson;
+
 import br.com.dao.DaoGeneric;
 import br.com.entidades.Pessoa;
 import br.com.repository.IDaoPessoa;
@@ -99,7 +101,19 @@ public class PessoaBean implements Serializable {
 			while ((cep = br.readLine())!=null) {
 				jsonCep.append(cep);
 			}
-			System.out.println(jsonCep);
+			
+			Pessoa gsonAux = new Gson().fromJson(jsonCep.toString(), Pessoa.class);
+			
+			pessoa.setCep(gsonAux.getCep());
+			pessoa.setLogradouro(gsonAux.getLogradouro());
+			pessoa.setComplemento(gsonAux.getComplemento());
+			pessoa.setBairro(gsonAux.getBairro());
+			pessoa.setLocalidade(gsonAux.getLocalidade());
+			pessoa.setUf(gsonAux.getUf());
+			pessoa.setIbge(gsonAux.getIbge());
+			pessoa.setGia(gsonAux.getGia());
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			mostrarMsg("Erro ao consultar Cep");
