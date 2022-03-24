@@ -28,9 +28,6 @@ public class Pessoa implements Serializable {
 
 	private String[] frameworks;
 
-	@Temporal(TemporalType.DATE)
-	private Date dataNascimento;
-
 	private String sexo;
 
 	private Boolean ativo;
@@ -44,6 +41,9 @@ public class Pessoa implements Serializable {
 	private String nivelProgramador;
 	
 	private Integer[] linguagens;
+	
+	@Temporal(TemporalType.DATE)
+	private Date dataNascimento = new Date();
 
 	public Pessoa() {
 		// TODO Auto-generated constructor stub
