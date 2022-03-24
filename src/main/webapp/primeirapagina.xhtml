@@ -95,15 +95,25 @@
 
 		<h:outputLabel/>
 		<h:panelGroup>
-		<h:commandButton value="Novo" action="#{pessoaBean.novo}" image="/resources/img/new add user.png" title="Novo" />
+		<h:commandButton id="btnNovoAjax" value="Novo com ajax" action="#{pessoaBean.novo}" image="/resources/img/new add user.png" title="Novo com Ajax">
+		 <f:ajax execute="btnNovoAjax" render="@form"/>
+		</h:commandButton>
+		
+		<h:commandButton style="margin-left:1cm;" id="btnNovoSemAjax" value="Novo" action="#{pessoaBean.novo}" image="/resources/img/new add user.png" title="Novo" />
 		<h:commandButton style="margin-left:1cm;" value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/save.png" title="Salvar" />
-		<h:commandButton style="margin-left:.5cm;" value="remover" action="#{pessoaBean.remove}" image="/resources/img/remover.png" title="Remover" rendered="#{pessoaBean.permitAcesso('ADMINISTRADOR')}"/>
-		<h:commandButton style="margin-left:.5cm;" value="Limpar" type="reset" image="/resources/img/clear.png" title="limpar"/>
+		<h:commandButton style="margin-left:1cm;" value="remover" action="#{pessoaBean.remove}" image="/resources/img/remover.png" title="Remover" rendered="#{pessoaBean.permitAcesso('ADMINISTRADOR')}"/>
+		<h:commandButton style="margin-left:1cm;" value="Limpar" action="#{pessoaBean.limpar}" image="/resources/img/clear.png" title="limpar"/>
+		
+		<h:commandButton id="btnLimparAjax" style="margin-left:1cm;" value="Limpar" action="#{pessoaBean.limpar}" image="/resources/img/clear.png" title="limpar com Ajax">
+		 <f:ajax execute="btnLimparAjax" render="@form"/>
+		</h:commandButton>
 		
 		</h:panelGroup>
 		
 		</h:panelGrid>
+		</h:form>
 		
+		<h:form id="formDataTable">
 		<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa" border="3" cellpadding="6" rendered="true">
 		<f:facet name="header">
 	   	     Lista de usuários cadastrados
