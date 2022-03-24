@@ -1,6 +1,11 @@
 package br.com.cursojsf;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +87,24 @@ public class PessoaBean implements Serializable {
 	}
 	
 	public void pesquisaCep(AjaxBehaviorEvent event) {
-		System.out.println("metodo pesquisa cep: "+pessoa.getCep());
+		
+		try {
+			URL url = new URL("https://viacep.com.br/ws/"+pessoa.getCep()+"/json/");
+			URLConnection connection = url.openConnection();
+			InputStream is = connection.getInputStream();
+			BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+			
+			String cep = "";
+			StringBuilder jsonCep = new StringBuilder();
+			while ((cep = br.readLine())!=null) {
+				jsonCep.append(cep);
+			}
+			System.out.println(jsonCep);
+		} catch (Exception e) {
+			e.printStackTrace();
+			mostrarMsg("Erro ao consultar Cep");
+		}
+		
 	}
 
 	public String logar() {
