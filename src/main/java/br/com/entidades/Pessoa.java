@@ -39,9 +39,11 @@ public class Pessoa implements Serializable {
 	private String perfilUser;
 
 	private String nivelProgramador;
-	
+
 	private Integer[] linguagens;
-	
+
+	private String cep;
+
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento = new Date();
 
@@ -49,22 +51,30 @@ public class Pessoa implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
 	public void setLinguagens(Integer[] linguagens) {
 		this.linguagens = linguagens;
 	}
-	
+
 	public Integer[] getLinguagens() {
 		return linguagens;
 	}
-	
+
 	public void setNivelProgramador(String nivelProgramador) {
 		this.nivelProgramador = nivelProgramador;
 	}
-	
+
 	public String getNivelProgramador() {
 		return nivelProgramador;
 	}
-	
+
 	public void setPerfilUser(String perfilUser) {
 		this.perfilUser = perfilUser;
 	}
