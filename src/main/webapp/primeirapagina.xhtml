@@ -27,7 +27,7 @@
 		<h:outputLabel value="Sobrenome:"/>
 		<h:inputText value="#{pessoaBean.pessoa.sobrenome}"/>
 		
-		<h:outputLabel value="Idade:"/>
+		<h:outputLabel value="Idade:" id="idade"/>
 		<h:inputText value="#{pessoaBean.pessoa.idade}"/>
 		
 		<h:outputLabel value="sexo:" />
@@ -39,9 +39,8 @@
 		</h:selectOneMenu>	
 		
 		<h:outputLabel value="Nascimento:" />
-		<h:inputText value="#{pessoaBean.pessoa.dataNascimento}">
-		<f:convertDateTime pattern="dd/MM/yyyy" dateStyle="full" locale="pt_BR"/>
-		
+		<h:inputText value="#{pessoaBean.pessoa.dataNascimento}" converterMessage="Data de nascimento errada">
+		<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00"/>
 		</h:inputText>
 
 		<h:outputLabel value="Framewok:" />
