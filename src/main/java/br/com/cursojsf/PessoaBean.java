@@ -37,7 +37,7 @@ public class PessoaBean implements Serializable {
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
 
 	private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
-	
+
 	private List<SelectItem> estados;
 
 	public String salvar() {
@@ -124,21 +124,21 @@ public class PessoaBean implements Serializable {
 
 	}
 
-	
 	public String deslogar() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = context.getExternalContext();
 		externalContext.getSessionMap().remove("usuarioLogado");
 
-		HttpServletRequest httpServletRequest = (HttpServletRequest)
-				context.getCurrentInstance().getExternalContext().getRequest();
-		
+		@SuppressWarnings("static-access")
+		HttpServletRequest httpServletRequest = (HttpServletRequest) context.getCurrentInstance().getExternalContext()
+				.getRequest();
+
 		httpServletRequest.getSession().invalidate();
-		
+
 		return "index.jsf";
 	}
-	
+
 	public String logar() {
 
 		Pessoa pessoaUSer = iDaoPessoa.consultarUsuario(pessoa.getLogin(), pessoa.getSenha());
@@ -165,10 +165,19 @@ public class PessoaBean implements Serializable {
 		return pessoaUser.getPerfilUser().equals(acesso);
 
 	}
-	
+
 	public List<SelectItem> getEstados() {
 		estados = iDaoPessoa.listaEstados();
 		return estados;
+	}
+
+	public void carregaCidades(AjaxBehaviorEvent event) {
+		String codigoEstado = (String) event.getComponent().getAttributes().get("submittedValue");
+
+		if (codigoEstado != null) {
+			System.out.println(codigoEstado);
+		}
+
 	}
 
 }
