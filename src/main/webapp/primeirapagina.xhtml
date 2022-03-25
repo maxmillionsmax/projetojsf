@@ -125,8 +125,15 @@
 			<h:selectOneMenu value="#{pessoaBean.pessoa.estados}" immediate="true">
 			<f:selectItem itemLabel="Selecione o Estado" noSelectionOption="true"/>
 			<f:selectItems value="#{pessoaBean.estados}"/>
-			<f:ajax event="change" execute="@this" listener="#{pessoaBean.carregaCidades}"/>
+			<f:ajax event="change" execute="@this" listener="#{pessoaBean.carregaCidades}" render="comboCidade"/>
 			</h:selectOneMenu>
+			
+		<h:outputLabel value="Cidades:"/>
+			<h:selectOneMenu value="#{pessoaBean.pessoa.cidades}" immediate="true" id="comboCidade">
+			<f:selectItem itemLabel="Selecione a Cidade" noSelectionOption="true"/>
+			<f:selectItems value="#{pessoaBean.cidades}"/>
+			<f:ajax event="change" execute="@this" listener="#{pessoaBean.carregaCidades}"/>
+			</h:selectOneMenu>	
 
 		<h:outputLabel/>
 		<h:panelGroup>
