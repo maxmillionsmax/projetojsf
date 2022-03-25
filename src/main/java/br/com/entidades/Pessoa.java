@@ -62,7 +62,6 @@ public class Pessoa implements Serializable {
 	private Date dataNascimento = new Date();
 
 	public Pessoa() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getLogradouro() {

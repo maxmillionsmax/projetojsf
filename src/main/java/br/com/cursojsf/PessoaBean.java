@@ -16,6 +16,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.servlet.http.HttpServletRequest;
 
 import com.google.gson.Gson;
 
@@ -48,14 +49,14 @@ public class PessoaBean implements Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		FacesMessage message = new FacesMessage(msg);
 		context.addMessage(null, message);
-			
+
 	}
 
 	public String novo() {
 		pessoa = new Pessoa();
 		return "";
 	}
-	
+
 	public String limpar() {
 		pessoa = new Pessoa();
 		return "";
@@ -87,23 +88,23 @@ public class PessoaBean implements Serializable {
 	public List<Pessoa> getPessoas() {
 		return pessoas;
 	}
-	
+
 	public void pesquisaCep(AjaxBehaviorEvent event) {
-		
+
 		try {
-			URL url = new URL("https://viacep.com.br/ws/"+pessoa.getCep()+"/json/");
+			URL url = new URL("https://viacep.com.br/ws/" + pessoa.getCep() + "/json/");
 			URLConnection connection = url.openConnection();
 			InputStream is = connection.getInputStream();
-			BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
-			
+			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
 			String cep = "";
 			StringBuilder jsonCep = new StringBuilder();
-			while ((cep = br.readLine())!=null) {
+			while ((cep = br.readLine()) != null) {
 				jsonCep.append(cep);
 			}
-			
+
 			Pessoa gsonAux = new Gson().fromJson(jsonCep.toString(), Pessoa.class);
-			
+
 			pessoa.setCep(gsonAux.getCep());
 			pessoa.setLogradouro(gsonAux.getLogradouro());
 			pessoa.setComplemento(gsonAux.getComplemento());
@@ -112,15 +113,29 @@ public class PessoaBean implements Serializable {
 			pessoa.setUf(gsonAux.getUf());
 			pessoa.setIbge(gsonAux.getIbge());
 			pessoa.setGia(gsonAux.getGia());
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			mostrarMsg("Erro ao consultar Cep");
 		}
-		
+
 	}
 
+	
+	public String deslogar() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = context.getExternalContext();
+		externalContext.getSessionMap().remove("usuarioLogado");
+
+		HttpServletRequest httpServletRequest = (HttpServletRequest)
+				context.getCurrentInstance().getExternalContext().getRequest();
+		
+		httpServletRequest.getSession().invalidate();
+		
+		return "index.jsf";
+	}
+	
 	public String logar() {
 
 		Pessoa pessoaUSer = iDaoPessoa.consultarUsuario(pessoa.getLogin(), pessoa.getSenha());
