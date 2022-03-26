@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -177,24 +178,24 @@ public class PessoaBean implements Serializable {
 	}
 
 	public void carregaCidades(AjaxBehaviorEvent event) {
-		String codigoEstado = (String) event.getComponent().getAttributes().get("submittedValue");
 
-		if (codigoEstado != null) {
-			Estados estado = JPAUtil.getEntityManager().find(Estados.class, Long.parseLong(codigoEstado));
-			if (codigoEstado != null) {
+		Estados estado = (Estados) ((HtmlSelectOneMenu) event.getSource()).getValue();
+
+			
+			if (estado != null) {
 				pessoa.setEstados(estado);
 				List<Cidades> cidades = JPAUtil.getEntityManager().
 						createQuery("from Cidades where estados.id = "
-				        + codigoEstado).getResultList();
+				        + estado.getId()).getResultList();
 				List<SelectItem> selectItemsCidade = new ArrayList<SelectItem>();
 				
 				for (Cidades cidade : cidades) {
-					selectItemsCidade.add(new SelectItem(cidade.getId(),cidade.getNome()));
+					selectItemsCidade.add(new SelectItem(cidade,cidade.getNome()));
 				}
 				setCidades(selectItemsCidade);
 			}
 		}
-	}
+	
 	
 	public List<SelectItem> getCidades() {
 		return cidades;
