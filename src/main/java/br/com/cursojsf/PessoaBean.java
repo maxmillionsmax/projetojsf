@@ -196,6 +196,27 @@ public class PessoaBean implements Serializable {
 			}
 		}
 	
+	public void editar() {
+		
+		if (pessoa.getCidades() != null) {
+			Estados estado = pessoa.getCidades().getEstados();
+			pessoa.setEstados(estado);
+			
+
+			pessoa.setEstados(estado);
+			List<Cidades> cidades = JPAUtil.getEntityManager().
+					createQuery("from Cidades where estados.id = "
+			        + estado.getId()).getResultList();
+			List<SelectItem> selectItemsCidade = new ArrayList<SelectItem>();
+			
+			for (Cidades cidade : cidades) {
+				selectItemsCidade.add(new SelectItem(cidade,cidade.getNome()));
+			}
+			setCidades(selectItemsCidade);
+		}
+	
+	}
+	
 	
 	public List<SelectItem> getCidades() {
 		return cidades;
