@@ -1,5 +1,7 @@
 package br.com.cursojsf;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -21,8 +23,10 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
+import javax.xml.bind.DatatypeConverter;
 
 import com.google.gson.Gson;
 
@@ -52,7 +56,31 @@ public class PessoaBean implements Serializable {
 
 	private Part arquivofoto;
 
-	public String salvar() {
+	public String salvar() throws IOException {
+
+		byte[] imagemByte = getByte(arquivofoto.getInputStream());
+		pessoa.setFotoIconBase64Original(imagemByte);
+
+		BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagemByte));
+		
+		int type = bufferedImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
+		
+		int largura = 200;
+		int altura = 200;
+		
+		BufferedImage resizedImage = new BufferedImage(altura,altura,type);
+		Graphics2D g = resizedImage.createGraphics();
+		g.drawImage(bufferedImage,0,0,largura,altura,null);
+		g.dispose();
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		String extensao = arquivofoto.getContentType().split("\\/")[1];
+		ImageIO.write(resizedImage, extensao, baos);
+		
+		String miniImagem = "data:"+arquivofoto.getContentType()+";base64,"
+		                     +DatatypeConverter.printBase64Binary(baos.toByteArray());
+		pessoa.setFotoIconBase64(miniImagem);
+		pessoa.setExtensao(extensao);
 		
 		pessoa = daoGeneric.merger(pessoa);
 		pessoa = new Pessoa();
@@ -235,22 +263,22 @@ public class PessoaBean implements Serializable {
 	public Part getArquivofoto() {
 		return arquivofoto;
 	}
-	
+
 	private byte[] getByte(InputStream is) throws IOException {
-		
+
 		int len;
 		int size = 1024;
 		byte[] buf = null;
 		if (is instanceof ByteArrayInputStream) {
 			size = is.available();
 			buf = new byte[size];
-			len = is.read(buf,0,size );
-		}else {
+			len = is.read(buf, 0, size);
+		} else {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			buf = new byte[size];
-			
-			while ((len = is.read(buf,0,size))!= -1) {
-				bos.write(buf,0,len);
+
+			while ((len = is.read(buf, 0, size)) != -1) {
+				bos.write(buf, 0, len);
 			}
 			buf = bos.toByteArray();
 		}
