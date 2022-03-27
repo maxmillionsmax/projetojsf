@@ -19,6 +19,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
 
@@ -45,8 +46,12 @@ public class PessoaBean implements Serializable {
 	private List<SelectItem> estados;
 
 	private List<SelectItem> cidades;
-	
+
+	private Part arquivofoto;
+
 	public String salvar() {
+		
+		System.out.println(arquivofoto);
 		pessoa = daoGeneric.merger(pessoa);
 		pessoa = new Pessoa();
 		carregarPessoas();
@@ -181,49 +186,51 @@ public class PessoaBean implements Serializable {
 
 		Estados estado = (Estados) ((HtmlSelectOneMenu) event.getSource()).getValue();
 
-			
-			if (estado != null) {
-				pessoa.setEstados(estado);
-				List<Cidades> cidades = JPAUtil.getEntityManager().
-						createQuery("from Cidades where estados.id = "
-				        + estado.getId()).getResultList();
-				List<SelectItem> selectItemsCidade = new ArrayList<SelectItem>();
-				
-				for (Cidades cidade : cidades) {
-					selectItemsCidade.add(new SelectItem(cidade,cidade.getNome()));
-				}
-				setCidades(selectItemsCidade);
-			}
-		}
-	
-	public void editar() {
-		
-		if (pessoa.getCidades() != null) {
-			Estados estado = pessoa.getCidades().getEstados();
+		if (estado != null) {
 			pessoa.setEstados(estado);
-			
-
-			pessoa.setEstados(estado);
-			List<Cidades> cidades = JPAUtil.getEntityManager().
-					createQuery("from Cidades where estados.id = "
-			        + estado.getId()).getResultList();
+			List<Cidades> cidades = JPAUtil.getEntityManager()
+					.createQuery("from Cidades where estados.id = " + estado.getId()).getResultList();
 			List<SelectItem> selectItemsCidade = new ArrayList<SelectItem>();
-			
+
 			for (Cidades cidade : cidades) {
-				selectItemsCidade.add(new SelectItem(cidade,cidade.getNome()));
+				selectItemsCidade.add(new SelectItem(cidade, cidade.getNome()));
 			}
 			setCidades(selectItemsCidade);
 		}
-	
 	}
-	
-	
+
+	public void editar() {
+
+		if (pessoa.getCidades() != null) {
+			Estados estado = pessoa.getCidades().getEstados();
+			pessoa.setEstados(estado);
+
+			pessoa.setEstados(estado);
+			List<Cidades> cidades = JPAUtil.getEntityManager()
+					.createQuery("from Cidades where estados.id = " + estado.getId()).getResultList();
+			List<SelectItem> selectItemsCidade = new ArrayList<SelectItem>();
+
+			for (Cidades cidade : cidades) {
+				selectItemsCidade.add(new SelectItem(cidade, cidade.getNome()));
+			}
+			setCidades(selectItemsCidade);
+		}
+
+	}
+
 	public List<SelectItem> getCidades() {
 		return cidades;
 	}
-	
+
 	public void setCidades(List<SelectItem> cidades) {
 		this.cidades = cidades;
 	}
 
+	public void setArquivofoto(Part arquivofoto) {
+		this.arquivofoto = arquivofoto;
+	}
+
+	public Part getArquivofoto() {
+		return arquivofoto;
+	}
 }
