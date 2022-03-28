@@ -90,6 +90,10 @@ public class PessoaBean implements Serializable {
 		mostrarMsg("Cadastrado com sucesso");
 		return "";
 	}
+	
+	public void registraLog() {
+		System.out.println("Método registraLog");
+	}
 
 	private void mostrarMsg(String msg) {
 		FacesContext context = FacesContext.getCurrentInstance();

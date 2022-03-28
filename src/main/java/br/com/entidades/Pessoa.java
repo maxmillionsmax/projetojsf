@@ -22,6 +22,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.br.CPF;
+import org.hibernate.validator.constraints.br.TituloEleitoral;
 
 @Entity
 public class Pessoa implements Serializable {
@@ -32,16 +34,10 @@ public class Pessoa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@NotEmpty(message = "Preencha o nome.")
-	@Size(min = 1, max = 50, message = "Nome deve ter entre 1 e 50 letras.")
 	private String nome;
 
-	@NotNull(message = "Digite o sobrenome.")
-	@NotEmpty(message = "Digite o sobrenome.")
 	private String sobrenome;
 
-	@DecimalMax(value = "100000", message = "idade Maxima deve ser de  100000 Anos")
-	@DecimalMin(value = "10" ,message = "Idade minima dever ser de 10 Anos")
 	private Integer idade;
 
 	private String[] frameworks;
@@ -59,6 +55,12 @@ public class Pessoa implements Serializable {
 	private String nivelProgramador;
 
 	private Integer[] linguagens;
+
+	@CPF(message = "Cpf Invalido.")
+	private String cpf;
+
+	@TituloEleitoral(message = "Titulo eleitoral invalido.")
+	private String titEleitoral;
 
 	private String cep;
 
@@ -94,6 +96,22 @@ public class Pessoa implements Serializable {
 	private Date dataNascimento = new Date();
 
 	public Pessoa() {
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getTitEleitoral() {
+		return titEleitoral;
+	}
+
+	public void setTitEleitoral(String titEleitoral) {
+		this.titEleitoral = titEleitoral;
 	}
 
 	public String getFotoIconBase64() {
