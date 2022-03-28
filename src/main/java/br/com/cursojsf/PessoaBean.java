@@ -23,6 +23,7 @@ import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -64,33 +65,33 @@ public class PessoaBean implements Serializable {
 		pessoa.setFotoIconBase64Original(imagemByte);
 
 		BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagemByte));
-		
-		int type = bufferedImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
-		
+
+		int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
+
 		int largura = 200;
 		int altura = 200;
-		
-		BufferedImage resizedImage = new BufferedImage(altura,altura,type);
+
+		BufferedImage resizedImage = new BufferedImage(altura, altura, type);
 		Graphics2D g = resizedImage.createGraphics();
-		g.drawImage(bufferedImage,0,0,largura,altura,null);
+		g.drawImage(bufferedImage, 0, 0, largura, altura, null);
 		g.dispose();
-		
+
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		String extensao = arquivofoto.getContentType().split("\\/")[1];
 		ImageIO.write(resizedImage, extensao, baos);
-		
-		String miniImagem = "data:"+arquivofoto.getContentType()+";base64,"
-		                     +DatatypeConverter.printBase64Binary(baos.toByteArray());
+
+		String miniImagem = "data:" + arquivofoto.getContentType() + ";base64,"
+				+ DatatypeConverter.printBase64Binary(baos.toByteArray());
 		pessoa.setFotoIconBase64(miniImagem);
 		pessoa.setExtensao(extensao);
-		
+
 		pessoa = daoGeneric.merger(pessoa);
 		pessoa = new Pessoa();
 		carregarPessoas();
 		mostrarMsg("Cadastrado com sucesso");
 		return "";
 	}
-	
+
 	public void registraLog() {
 		System.out.println("Método registraLog");
 	}
@@ -221,21 +222,21 @@ public class PessoaBean implements Serializable {
 	public void carregaCidades(AjaxBehaviorEvent event) {
 
 		try {
-			
+
 			Estados estado = (Estados) ((HtmlSelectOneMenu) event.getSource()).getValue();
-			
+
 			if (estado != null) {
 				pessoa.setEstados(estado);
 				List<Cidades> cidades = JPAUtil.getEntityManager()
 						.createQuery("from Cidades where estados.id = " + estado.getId()).getResultList();
 				ArrayList<SelectItem> selectItemsCidade = new ArrayList<SelectItem>();
-				
+
 				for (Cidades cidade : cidades) {
 					selectItemsCidade.add(new SelectItem(cidade, cidade.getNome()));
 				}
 				setCidades(selectItemsCidade);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -296,22 +297,36 @@ public class PessoaBean implements Serializable {
 		}
 		return buf;
 	}
-	
+
 	public void download() throws IOException {
-		
+
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String fileDownloadId = params.get("fileDownloadId");
-		
+
 		Pessoa pessoa = daoGeneric.consultar(Pessoa.class, fileDownloadId);
-		
-		HttpServletResponse response = (HttpServletResponse) 
-				                       FacesContext.getCurrentInstance().getExternalContext().getResponse();
-		response.addHeader("Content-Disposition", "attachment; filename=download."+pessoa.getExtensao());
+
+		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
+				.getResponse();
+		response.addHeader("Content-Disposition", "attachment; filename=download." + pessoa.getExtensao());
 		response.setContentType("application/octet-stream");
 		response.setContentLength(pessoa.getFotoIconBase64Original().length);
 		response.getOutputStream().write(pessoa.getFotoIconBase64Original());
 		response.getOutputStream().flush();
 		FacesContext.getCurrentInstance().responseComplete();
-		
+
+	}
+
+	public void mudancaDeValor(ValueChangeEvent evento) {
+
+		System.out.println("Valor antigo " + evento.getOldValue());
+		System.out.println("Valor novo " + evento.getNewValue());
+
+	}
+
+	public void mudancaDeValorSobrenome(ValueChangeEvent evento) {
+
+		System.out.println("Valor antigo " + evento.getOldValue());
+		System.out.println("Valor novo " + evento.getNewValue());
+
 	}
 }
