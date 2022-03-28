@@ -216,18 +216,24 @@ public class PessoaBean implements Serializable {
 
 	public void carregaCidades(AjaxBehaviorEvent event) {
 
-		Estados estado = (Estados) ((HtmlSelectOneMenu) event.getSource()).getValue();
-
-		if (estado != null) {
-			pessoa.setEstados(estado);
-			List<Cidades> cidades = JPAUtil.getEntityManager()
-					.createQuery("from Cidades where estados.id = " + estado.getId()).getResultList();
-			List<SelectItem> selectItemsCidade = new ArrayList<SelectItem>();
-
-			for (Cidades cidade : cidades) {
-				selectItemsCidade.add(new SelectItem(cidade, cidade.getNome()));
+		try {
+			
+			Estados estado = (Estados) ((HtmlSelectOneMenu) event.getSource()).getValue();
+			
+			if (estado != null) {
+				pessoa.setEstados(estado);
+				List<Cidades> cidades = JPAUtil.getEntityManager()
+						.createQuery("from Cidades where estados.id = " + estado.getId()).getResultList();
+				ArrayList<SelectItem> selectItemsCidade = new ArrayList<SelectItem>();
+				
+				for (Cidades cidade : cidades) {
+					selectItemsCidade.add(new SelectItem(cidade, cidade.getNome()));
+				}
+				setCidades(selectItemsCidade);
 			}
-			setCidades(selectItemsCidade);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
