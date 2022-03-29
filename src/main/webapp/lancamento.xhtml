@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:ui ="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Lançamento</title>
@@ -11,19 +12,19 @@
  	<ui:include src="/menu.xhtml"></ui:include>
  	
 	<h:form id="formLancamento">
-			<h:panelGrid columns="2">
+			<h:panelGrid>
 			<f:facet name="header">
 				<h:outputText value="Lancamento"/>
 			</f:facet>
 			
 			<h:outputLabel value="ID:"/>
-			<h:inputText value="#{lancametoBean.lancamento.id}"/>
+			<b:inputText value="#{lancametoBean.lancamento.id}"/>
 			<h:outputLabel value="Nota:"/>
-			<h:inputText value="#{lancametoBean.lancamento.numeroNotaFiscal}"/>
+			<b:inputText value="#{lancametoBean.lancamento.numeroNotaFiscal}"/>
 			<h:outputLabel value="Origem:"/>
-			<h:inputText value="#{lancametoBean.lancamento.empresaOrigem}"/>
+			<b:inputText value="#{lancametoBean.lancamento.empresaOrigem}"/>
 			<h:outputLabel value="Destino:"/>
-			<h:inputText value="#{lancametoBean.lancamento.empresaDestino}"/>
+			<b:inputText value="#{lancametoBean.lancamento.empresaDestino}"/>
 			
 		<h:outputLabel/>
 		
@@ -35,7 +36,7 @@
 		</h:panelGroup>
 	    </h:panelGrid>
 			
-		<h:dataTable value="#{lancametoBean.lancamentos}" var="lanc" border="3" cellpadding="6" rendered="true">
+		<b:dataTable value="#{lancametoBean.lancamentos}" var="lanc" rendered="true">
 		<f:facet name="header">Lista de Lancamentos</f:facet>
 			<h:column>
 				<f:facet name="header">ID</f:facet>
@@ -76,7 +77,7 @@
 				</h:commandLink>
 			</h:column>			
 	
-		</h:dataTable>
+		</b:dataTable>
 		
 	</h:form>
 	
