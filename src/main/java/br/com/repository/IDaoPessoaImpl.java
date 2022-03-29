@@ -10,10 +10,12 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import br.com.entidades.Estados;
 import br.com.entidades.Pessoa;
 
 @Named
 public class IDaoPessoaImpl implements IDaoPessoa,Serializable {
+	
 	
 	private static final long serialVersionUID = 1L;
 	@Inject
@@ -39,10 +41,13 @@ public class IDaoPessoaImpl implements IDaoPessoa,Serializable {
 
 		List<SelectItem> selectItems = new ArrayList<SelectItem>();
 		
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		@SuppressWarnings("unchecked")
+		List<Estados> estados = entityManager.createQuery("from Estados").getResultList();
 		
-		entityTransaction.begin();
+		for (Estados estado : estados) {
+			selectItems.add(new SelectItem(estado, estado.getNome()));
 			
+		}
 		return selectItems;
 	}
 

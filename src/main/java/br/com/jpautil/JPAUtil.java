@@ -10,21 +10,21 @@ import javax.persistence.Persistence;
 @ApplicationScoped
 public class JPAUtil {
 
-	private  EntityManagerFactory factory = null;
-	
+	private EntityManagerFactory factory = null;
+
 	public JPAUtil() {
 		if (factory == null) {
 			factory = Persistence.createEntityManagerFactory("projetojsf");
 		}
 	}
-	
+
 	@Produces
 	@RequestScoped
-	public  EntityManager getEntityManager() {
+	public EntityManager getEntityManager() {
 		return factory.createEntityManager();
 	}
-	
-	public  Object getPrimaryKey(Object entity) {
+
+	public Object getPrimaryKey(Object entity) {
 		return factory.getPersistenceUnitUtil().getIdentifier(entity);
 	}
 }

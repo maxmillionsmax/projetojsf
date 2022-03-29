@@ -12,14 +12,14 @@ import br.com.entidades.Lancamento;
 
 @Named
 public class IDaoLancamentoImpl implements IDaoLancamento,Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private EntityManager entityManager;
-
+	
 	@Override
 	public List<Lancamento> consultar(Long codUser) {
 		

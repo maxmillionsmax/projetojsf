@@ -132,6 +132,21 @@
 			<f:selectItem itemValue="5" itemLabel="Cobol"/>	
 			</h:selectManyCheckbox>	
 		
+		<h:outputLabel value="Estados:"/>
+			<h:selectOneMenu value="#{pessoaBean.pessoa.estados}" immediate="true" id="comboEstados"
+			converter="converterEstado">
+			<f:selectItem itemLabel="Selecione o Estado" noSelectionOption="true"/>
+			<f:selectItems value="#{pessoaBean.estados}"/>
+			<f:ajax event="change" execute="@this" listener="#{pessoaBean.carregaCidades}" render="comboCidade"/>
+			</h:selectOneMenu>
+			
+		<h:outputLabel value="Cidades:"/>
+			<h:selectOneMenu value="#{pessoaBean.pessoa.cidades}" immediate="true" id="comboCidade"
+			converter="cidadesConverte">
+			<f:selectItem itemLabel="Selecione a Cidade" noSelectionOption="true"/>
+			<f:selectItems value="#{pessoaBean.cidades}"/>
+			<f:ajax event="change" execute="@this" listener="#{pessoaBean.carregaCidades}"/>
+			</h:selectOneMenu>	
 
 		<h:outputLabel/>
 		<h:panelGroup>
@@ -182,7 +197,7 @@
 			
 			<h:column>
 				<f:facet name="header">Editar</f:facet>
-				<h:commandLink title="Editar" immediate="true">
+				<h:commandLink title="Editar" immediate="true" action="#{pessoaBean.editar}">
 				  <f:setPropertyActionListener value="#{pessoa}" target="#{pessoaBean.pessoa}"/>
 				   <h:graphicImage value="/resources/img/edit.png"/>
 				</h:commandLink>

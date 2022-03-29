@@ -63,6 +63,7 @@ public class DaoGeneric<E> implements Serializable {
 		
 
 		entityTransaction.commit();
+		entityManager.close();
 	}
 	
 	public List<E> getListEntity(Class<E> entidade){

@@ -17,12 +17,12 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-import javax.faces.view.ViewScoped;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,23 +34,26 @@ import javax.xml.bind.DatatypeConverter;
 import com.google.gson.Gson;
 
 import br.com.dao.DaoGeneric;
+import br.com.entidades.Cidades;
+import br.com.entidades.Estados;
 import br.com.entidades.Pessoa;
 import br.com.jpautil.JPAUtil;
 import br.com.repository.IDaoPessoa;
 
-@ViewScoped
+@javax.faces.view.ViewScoped
 @Named(value = "pessoaBean")
 public class PessoaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	@Inject
+	private JPAUtil jpaUtil;
 
 	private Pessoa pessoa = new Pessoa();
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
 
 	@Inject
 	private DaoGeneric<Pessoa> daoGeneric;
-
 	@Inject
 	private IDaoPessoa iDaoPessoa;
 
@@ -220,6 +223,42 @@ public class PessoaBean implements Serializable {
 		return estados;
 	}
 
+	public void carregaCidades(AjaxBehaviorEvent event) {
+
+		Estados estado = (Estados) ((HtmlSelectOneMenu) event.getSource()).getValue();
+
+		if (estado != null) {
+			pessoa.setEstados(estado);
+			List<Cidades> cidades = jpaUtil.getEntityManager()
+					.createQuery("from Cidades where estados.id = " + estado.getId()).getResultList();
+			ArrayList<SelectItem> selectItemsCidade = new ArrayList<SelectItem>();
+
+			for (Cidades cidade : cidades) {
+				selectItemsCidade.add(new SelectItem(cidade, cidade.getNome()));
+			}
+			setCidades(selectItemsCidade);
+		}
+
+	}
+
+	public void editar() {
+
+		if (pessoa.getCidades() != null) {
+			Estados estado = pessoa.getCidades().getEstados();
+			pessoa.setEstados(estado);
+
+			pessoa.setEstados(estado);
+			List<Cidades> cidades = jpaUtil.getEntityManager()
+					.createQuery("from Cidades where estados.id = " + estado.getId()).getResultList();
+			List<SelectItem> selectItemsCidade = new ArrayList<SelectItem>();
+
+			for (Cidades cidade : cidades) {
+				selectItemsCidade.add(new SelectItem(cidade, cidade.getNome()));
+			}
+			setCidades(selectItemsCidade);
+		}
+
+	}
 
 	public List<SelectItem> getCidades() {
 		return cidades;
