@@ -17,25 +17,25 @@
 			</f:facet>
 			
 			<h:outputLabel value="ID:"/>
-			<h:inputText value="#{lancametoBean.lancamento.id}"/>
+			<h:inputText value="#{lancamentoBean.lancamento.id}"/>
 			<h:outputLabel value="Nota:"/>
-			<h:inputText value="#{lancametoBean.lancamento.numeroNotaFiscal}"/>
+			<h:inputText value="#{lancamentoBean.lancamento.numeroNotaFiscal}"/>
 			<h:outputLabel value="Origem:"/>
-			<h:inputText value="#{lancametoBean.lancamento.empresaOrigem}"/>
+			<h:inputText value="#{lancamentoBean.lancamento.empresaOrigem}"/>
 			<h:outputLabel value="Destino:"/>
-			<h:inputText value="#{lancametoBean.lancamento.empresaDestino}"/>
+			<h:inputText value="#{lancamentoBean.lancamento.empresaDestino}"/>
 			
 		<h:outputLabel/>
 		
 		<h:panelGroup>
-			<h:commandButton value="Novo" action="#{lancametoBean.novo}" image="/resources/img/new add user.png" title="Novo" />
-			<h:commandButton style="margin-left:1cm;" value="Salvar" action="#{lancametoBean.salvar}" image="/resources/img/save.png" title="Salvar" />
-			<h:commandButton style="margin-left:1cm;" value="remover" action="#{lancametoBean.remove}" image="/resources/img/remover.png" title="Remover" rendered="#{pessoaBean.permitAcesso('ADMINISTRADOR')}"/>
+			<h:commandButton value="Novo" action="#{lancamentoBean.novo}" image="/resources/img/new add user.png" title="Novo" />
+			<h:commandButton style="margin-left:1cm;" value="Salvar" action="#{lancamentoBean.salvar}" image="/resources/img/save.png" title="Salvar" />
+			<h:commandButton style="margin-left:1cm;" value="remover" action="#{lancamentoBean.remove}" image="/resources/img/remover.png" title="Remover" rendered="#{pessoaBean.permitAcesso('ADMINISTRADOR')}"/>
 			<h:commandButton style="margin-left:1cm;" value="Limpar" type="reset" image="/resources/img/clear.png" title="limpar"/>
 		</h:panelGroup>
 	    </h:panelGrid>
 			
-		<h:dataTable value="#{lancametoBean.lancamentos}" var="lanc" border="3" cellpadding="6" rendered="true">
+		<h:dataTable value="#{lancamentoBean.lancamentos}" var="lanc" border="3" cellpadding="6" rendered="true">
 		<f:facet name="header">Lista de Lancamentos</f:facet>
 			<h:column>
 				<f:facet name="header">ID</f:facet>
@@ -63,15 +63,15 @@
 			<h:column>
 				<f:facet name="header">Editar</f:facet>
 				<h:commandLink title="Editar">
-				  <f:setPropertyActionListener value="#{lanc}" target="#{lancametoBean.lancamento}"/>
+				  <f:setPropertyActionListener value="#{lanc}" target="#{lancamentoBean.lancamento}"/>
 				   <h:graphicImage value="/resources/img/edit.png"/>
 				</h:commandLink>
 			</h:column>
 			
 			<h:column rendered="#{pessoaBean.permitAcesso('ADMINISTRADOR')}">
 				<f:facet name="header">Excluir</f:facet>
-				<h:commandLink action="#{lancametoBean.remove}" title="Excluir">
-				  <f:setPropertyActionListener value="#{lanc}" target="#{lancametoBean.lancamento}"/>
+				<h:commandLink action="#{lancamentoBean.remove}" title="Excluir">
+				  <f:setPropertyActionListener value="#{lanc}" target="#{lancamentoBean.lancamento}"/>
 				  <h:graphicImage value="/resources/img/delete.png"/>
 				</h:commandLink>
 			</h:column>			
