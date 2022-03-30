@@ -66,6 +66,8 @@ public class PessoaBean implements Serializable {
 
 	public String salvar() throws IOException {
 
+		if (arquivofoto != null) {
+			
 		byte[] imagemByte = getByte(arquivofoto.getInputStream());
 		pessoa.setFotoIconBase64Original(imagemByte);
 
@@ -89,12 +91,21 @@ public class PessoaBean implements Serializable {
 				+ DatatypeConverter.printBase64Binary(baos.toByteArray());
 		pessoa.setFotoIconBase64(miniImagem);
 		pessoa.setExtensao(extensao);
+		}
 
 		pessoa = daoGeneric.merger(pessoa);
 		pessoa = new Pessoa();
 		carregarPessoas();
 		mostrarMsg("Cadastrado com sucesso");
 		return "";
+	}
+
+	public Part getArquivofoto() {
+		return arquivofoto;
+	}
+
+	public void setArquivofoto(Part arquivofoto) {
+		this.arquivofoto = arquivofoto;
 	}
 
 	public void registraLog() {
@@ -194,23 +205,22 @@ public class PessoaBean implements Serializable {
 
 	public String logar() {
 
-		
-			Pessoa pessoaUSer = iDaoPessoa.consultarUsuario(pessoa.getLogin(), pessoa.getSenha());
+		Pessoa pessoaUSer = iDaoPessoa.consultarUsuario(pessoa.getLogin(), pessoa.getSenha());
 
-			if (pessoaUSer != null) {
+		if (pessoaUSer != null) {
 
-				FacesContext context = FacesContext.getCurrentInstance();
-				ExternalContext externalContext = context.getExternalContext();
+			FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = context.getExternalContext();
 
-				HttpServletRequest req = (HttpServletRequest) externalContext.getRequest();
-				HttpSession session = req.getSession();
+			HttpServletRequest req = (HttpServletRequest) externalContext.getRequest();
+			HttpSession session = req.getSession();
 
-				session.setAttribute("usuarioLogado", pessoaUSer);
+			session.setAttribute("usuarioLogado", pessoaUSer);
 
-				return "primeirapagina.jsf";
-			}else {
-				FacesContext.getCurrentInstance().addMessage("msg", new FacesMessage("Usuário não encotrado"));
-			}
+			return "primeirapagina.jsf";
+		} else {
+			FacesContext.getCurrentInstance().addMessage("msg", new FacesMessage("Usuário não encotrado"));
+		}
 		return "index.jsf";
 	}
 
@@ -229,6 +239,7 @@ public class PessoaBean implements Serializable {
 		return estados;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void carregaCidades(AjaxBehaviorEvent event) {
 
 		Estados estado = (Estados) ((HtmlSelectOneMenu) event.getSource()).getValue();
@@ -247,6 +258,7 @@ public class PessoaBean implements Serializable {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public void editar() {
 
 		if (pessoa.getCidades() != null) {
@@ -272,14 +284,6 @@ public class PessoaBean implements Serializable {
 
 	public void setCidades(List<SelectItem> cidades) {
 		this.cidades = cidades;
-	}
-
-	public void setArquivofoto(Part arquivofoto) {
-		this.arquivofoto = arquivofoto;
-	}
-
-	public Part getArquivofoto() {
-		return arquivofoto;
 	}
 
 	private byte[] getByte(InputStream is) throws IOException {

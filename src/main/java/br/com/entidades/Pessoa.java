@@ -56,10 +56,8 @@ public class Pessoa implements Serializable {
 
 	private Integer[] linguagens;
 
-	@CPF(message = "Cpf Invalido.")
 	private String cpf;
 
-	@TituloEleitoral(message = "Titulo eleitoral invalido.")
 	private String titEleitoral;
 
 	private String cep;
