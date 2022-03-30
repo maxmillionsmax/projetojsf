@@ -29,7 +29,7 @@ public class IDaoLancamentoImpl implements IDaoLancamento,Serializable {
 		transaction.begin();
 		
 		lista = entityManager.createQuery(" from Lancamento where usuario.id = "+codUser).getResultList();
-		
+				
 		transaction.commit();
 		
 		return lista;

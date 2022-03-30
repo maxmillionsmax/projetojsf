@@ -40,8 +40,8 @@ public class LancamentoBean implements Serializable {
 		lancamento.setUsuario(pessoaUser);
 		lancamento = daoGeneric.merger(lancamento);
 		
-		carregarlancamentos();
 		
+		carregarlancamentos();
 		lancamento = new Lancamento();
 
 		return "";
