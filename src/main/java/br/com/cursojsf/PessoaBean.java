@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
 
@@ -193,19 +194,24 @@ public class PessoaBean implements Serializable {
 
 	public String logar() {
 
-		Pessoa pessoaUSer = iDaoPessoa.consultarUsuario(pessoa.getLogin(), pessoa.getSenha());
+		
+			Pessoa pessoaUSer = iDaoPessoa.consultarUsuario(pessoa.getLogin(), pessoa.getSenha());
 
-		if (pessoaUSer != null) {
+			if (pessoaUSer != null) {
 
-			FacesContext context = FacesContext.getCurrentInstance();
-			ExternalContext externalContext = context.getExternalContext();
-			externalContext.getSessionMap().put("usuarioLogado", pessoaUSer);
+				FacesContext context = FacesContext.getCurrentInstance();
+				ExternalContext externalContext = context.getExternalContext();
 
-			return "primeirapagina.jsf";
-		}
+				HttpServletRequest req = (HttpServletRequest) externalContext.getRequest();
+				HttpSession session = req.getSession();
 
+				session.setAttribute("usuarioLogado", pessoaUSer);
+
+				return "primeirapagina.jsf";
+			}else {
+				FacesContext.getCurrentInstance().addMessage("msg", new FacesMessage("Usuário não encotrado"));
+			}
 		return "index.jsf";
-
 	}
 
 	public boolean permitAcesso(String acesso) {
